@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>નવરાત્રિ ઉત્સવ હિસાબ - પાસબુક</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600;700&family=Yatra+One&family=Noto+Sans+Gujarati:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --maroon:#5C1264;
+    --maroon-dark:#38073F;
+    --marigold:#F2B705;
+    --marigold-deep:#C79000;
+    --ivory:#FDF1F7;
+    --cream-card:#FFFAFC;
+    --green:#2F7A4F;
+    --green-bg:#E6F4EA;
+    --rust:#D6336C;
+    --rust-bg:#FCE4EE;
+    --ink:#301526;
+    --ink-soft:#7C5A70;
+    --line:#EAD2E0;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--ivory);
+    font-family:'Hind',sans-serif;
+    color:var(--ink);
+    padding-bottom:40px;
+  }
+  .header{
+    background:linear-gradient(180deg,var(--maroon) 0%,var(--maroon-dark) 100%);
+    padding:28px 20px 34px;
+    position:relative;
+    overflow:hidden;
+  }
+  .header::before{
+    content:"";
+    position:absolute;
+    top:0;left:0;right:0;height:6px;
+    background:repeating-linear-gradient(90deg,var(--marigold) 0 14px, var(--maroon-dark) 14px 18px);
+  }
+  .eyebrow{
+    font-family:'Yatra One',cursive;
+    color:var(--marigold);
+    font-size:15px;
+    letter-spacing:1px;
+    margin:0 0 4px;
+  }
+  .title{
+    font-family:'Noto Sans Gujarati','Yatra One',cursive;
+    font-weight:700;
+    color:var(--marigold);
+    font-size:26px;
+    margin:0 0 4px;
+    line-height:1.35;
+  }
+  .subtitle{
+    font-family:'Noto Sans Gujarati','Hind',sans-serif;
+    color:var(--ivory);
+    font-size:15px;
+    margin:0 0 3px;
+  }
+  .venue{
+    font-family:'Noto Sans Gujarati','Hind',sans-serif;
+    color:#E9CBE0;
+    font-size:13px;
+    margin:0;
+  }
+  .wrap{
+    max-width:640px;
+    margin:0 auto;
+    padding:0 16px;
+  }
+  .summary{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:-20px;
+    position:relative;
+    z-index:2;
+  }
+  .metric{
+    background:var(--cream-card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:12px 10px;
+    text-align:center;
+    box-shadow:0 4px 10px rgba(60,30,10,0.08);
+  }
+  .metric .label{
+    font-size:12px;
+    color:var(--ink-soft);
+    margin:0 0 4px;
+  }
+  .metric .value{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:700;
+    font-size:17px;
+    margin:0;
+  }
+  .metric.daan .value{color:var(--green);}
+  .metric.kharch .value{color:var(--rust);}
+  .metric.balance .value{color:var(--marigold-deep);}
+
+  .breakdown-card{
+    background:var(--cream-card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:12px 14px;
+    margin-top:12px;
+  }
+  .breakdown-title{
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--ink-soft);
+    margin:0 0 8px;
+  }
+  .breakdown-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:13.5px;
+    padding:5px 0;
+    border-bottom:1px dashed var(--line);
+  }
+  .breakdown-row:last-child{border-bottom:none;}
+  .breakdown-row .amt{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:700;
+    color:var(--rust);
+  }
+
+  .section-title{
+    font-family:'Yatra One',cursive;
+    font-size:19px;
+    color:var(--maroon);
+    margin:30px 0 12px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .section-title .diya{font-size:16px;}
+
+  .form-card{
+    background:var(--cream-card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px;
+  }
+  .type-toggle{
+    display:flex;
+    gap:8px;
+    margin-bottom:14px;
+  }
+  .type-btn{
+    flex:1;
+    padding:10px;
+    border-radius:10px;
+    border:1.5px solid var(--line);
+    background:var(--ivory);
+    font-family:'Hind',sans-serif;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    color:var(--ink-soft);
+  }
+  .type-btn.active.daan{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+  .type-btn.active.kharch{background:var(--rust-bg);border-color:var(--rust);color:var(--rust);}
+
+  .field{margin-bottom:12px;}
+  .field label{
+    display:block;
+    font-size:13px;
+    color:var(--ink-soft);
+    margin-bottom:5px;
+    font-weight:600;
+  }
+  .field input, .field select{
+    width:100%;
+    padding:10px 12px;
+    border:1.5px solid var(--line);
+    border-radius:8px;
+    font-family:'Hind',sans-serif;
+    font-size:15px;
+    background:#fff;
+    color:var(--ink);
+  }
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+  .add-btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:var(--maroon);
+    color:var(--ivory);
+    font-family:'Hind',sans-serif;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    margin-top:4px;
+  }
+  .add-btn:active{transform:scale(0.98);}
+  .error-msg{
+    color:var(--rust);
+    font-size:13px;
+    margin:-6px 0 10px;
+    display:none;
+  }
+
+  .type-filter{
+    display:flex;
+    gap:6px;
+    padding:0 0 10px;
+  }
+  .type-chip{
+    flex:1;
+    padding:8px;
+    border-radius:10px;
+    border:1.5px solid var(--line);
+    background:var(--cream-card);
+    font-family:'Hind',sans-serif;
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--ink-soft);
+    cursor:pointer;
+  }
+  .type-chip.active.all{background:var(--marigold);border-color:var(--marigold-deep);color:var(--maroon-dark);}
+  .type-chip.active.daan{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+  .type-chip.active.kharch{background:var(--rust-bg);border-color:var(--rust);color:var(--rust);}
+
+  .date-range-filter{
+    background:var(--cream-card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:12px 14px;
+    margin-bottom:12px;
+  }
+  .date-range-filter .drf-title{
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--ink-soft);
+    margin:0 0 8px;
+  }
+  .date-range-filter .row2{margin-bottom:8px;}
+  .date-range-filter .field{margin-bottom:0;}
+  .clear-date-btn{
+    width:100%;
+    padding:9px;
+    border-radius:8px;
+    border:1.5px solid var(--line);
+    background:var(--ivory);
+    color:var(--ink-soft);
+    font-family:'Hind',sans-serif;
+    font-size:13.5px;
+    font-weight:600;
+    cursor:pointer;
+  }
+
+  .entry{
+    background:var(--cream-card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:12px 14px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:9px;
+  }
+  .entry-tag{
+    width:6px;
+    align-self:stretch;
+    border-radius:4px;
+    flex:0 0 auto;
+  }
+  .entry-tag.daan{background:var(--green);}
+  .entry-tag.kharch{background:var(--rust);}
+  .entry-body{flex:1;min-width:0;}
+  .entry-name{
+    font-weight:600;
+    font-size:15px;
+    margin:0 0 2px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .entry-meta{
+    font-size:12px;
+    color:var(--ink-soft);
+    margin:0;
+  }
+  .entry-amount{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:700;
+    font-size:15px;
+    flex:0 0 auto;
+  }
+  .entry-amount.daan{color:var(--green);}
+  .entry-amount.kharch{color:var(--rust);}
+  .del-btn{
+    flex:0 0 auto;
+    width:30px;height:30px;
+    border-radius:50%;
+    border:1.5px solid var(--line);
+    background:#fff;
+    color:var(--rust);
+    font-size:15px;
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .empty{
+    text-align:center;
+    color:var(--ink-soft);
+    font-size:14px;
+    padding:24px 10px;
+    background:var(--cream-card);
+    border:1px dashed var(--line);
+    border-radius:12px;
+  }
+  .loading{
+    text-align:center;
+    color:var(--ink-soft);
+    font-size:13px;
+    padding:14px;
+  }
+  .note{
+    font-size:12px;
+    color:var(--ink-soft);
+    text-align:center;
+    margin-top:22px;
+    line-height:1.6;
+  }
+
+  .login-screen{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(180deg,var(--maroon) 0%,var(--maroon-dark) 100%);
+    padding:20px;
+  }
+  .login-card{
+    background:var(--cream-card);
+    border-radius:16px;
+    padding:28px 22px;
+    width:100%;
+    max-width:360px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.25);
+  }
+  .login-eyebrow{
+    font-family:'Yatra One',cursive;
+    color:var(--marigold-deep);
+    font-size:14px;
+    margin:0 0 4px;
+    text-align:center;
+  }
+  .login-title{
+    font-family:'Noto Sans Gujarati','Yatra One',cursive;
+    color:var(--maroon);
+    font-size:22px;
+    margin:0 0 4px;
+    text-align:center;
+  }
+  .login-sub{
+    font-size:13.5px;
+    color:var(--ink-soft);
+    text-align:center;
+    margin:0 0 18px;
+  }
+  .login-error{
+    color:var(--rust);
+    font-size:13px;
+    margin:-6px 0 10px;
+    display:none;
+    text-align:center;
+  }
+
+  .edit-btn{
+    flex:0 0 auto;
+    width:30px;height:30px;
+    border-radius:50%;
+    border:1.5px solid var(--line);
+    background:#fff;
+    color:var(--marigold-deep);
+    font-size:14px;
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .cancel-edit-btn{
+    width:100%;
+    padding:10px;
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    background:var(--ivory);
+    color:var(--ink-soft);
+    font-family:'Hind',sans-serif;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    margin-top:8px;
+    display:none;
+  }
+  .editing-banner{
+    background:var(--rust-bg);
+    color:var(--rust);
+    border-radius:8px;
+    padding:8px 12px;
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:12px;
+    display:none;
+  }
+
+
+  /* ===== Entries dashboard v7 ===== */
+  .quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 2px;}
+  .quick-btn{border:0;border-radius:11px;padding:12px 10px;font-family:'Hind',sans-serif;font-weight:700;font-size:14px;cursor:pointer;}
+  .quick-btn.primary,.quick-btn.secondary{background:var(--cream-card);color:var(--maroon);border:1.5px solid var(--line);}
+  .quick-btn.active{background:var(--maroon);color:var(--ivory);border-color:var(--maroon);}
+  .panel-section{scroll-margin-top:12px;}
+  .panel-section.is-hidden{display:none;}
+  .ledger-toolbar{display:flex;gap:8px;align-items:center;justify-content:space-between;margin:18px 0 10px;}
+  .ledger-toolbar h2{margin:0;}
+  .close-panel-btn{border:1.5px solid var(--line);background:var(--cream-card);color:var(--ink-soft);border-radius:8px;padding:7px 10px;cursor:pointer;font-family:'Hind',sans-serif;font-weight:600;}
+  .entries-list{display:flex;flex-direction:column;gap:9px;}
+  .entry{background:var(--cream-card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;grid-template-columns:7px 1fr auto;gap:12px;align-items:center;}
+  .entry-tag{width:7px;height:100%;min-height:58px;border-radius:5px;}
+  .entry-tag.daan{background:var(--green);}
+  .entry-tag.kharch{background:var(--rust);}
+  .entry-body{min-width:0;}
+  .entry-main{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:3px;}
+  .entry-name{font-size:15px;font-weight:700;color:var(--ink);}
+  .entry-type{font-size:11.5px;font-weight:700;border-radius:999px;padding:3px 7px;}
+  .entry-type.credit{background:var(--green-bg);color:var(--green);}
+  .entry-type.debit{background:var(--rust-bg);color:var(--rust);}
+  .entry-meta{font-size:12px;color:var(--ink-soft);line-height:1.5;}
+  .entry-side{text-align:right;white-space:nowrap;}
+  .entry-amount{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;}
+  .entry-amount.daan{color:var(--green);}
+  .entry-amount.kharch{color:var(--rust);}
+  .entry-date{font-size:11.5px;color:var(--ink-soft);margin-top:3px;}
+  .small-edit{margin-top:6px;border:1px solid var(--line);background:var(--ivory);border-radius:7px;padding:5px 8px;font-family:'Hind',sans-serif;font-size:12px;color:var(--maroon);cursor:pointer;}
+  .small-delete{margin-top:6px;margin-left:4px;border:1px solid #D7A79A;background:#FFF1EC;border-radius:7px;padding:5px 8px;font-family:'Hind',sans-serif;font-size:12px;color:var(--rust);cursor:pointer;}
+  .filter-card{background:var(--cream-card);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:12px;}
+  .filter-title{font-size:12px;font-weight:700;color:var(--ink-soft);margin:0 0 8px;}
+  .filter-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 12px;}
+  .mini-metric{background:var(--ivory);border:1px solid var(--line);border-radius:10px;padding:9px;text-align:center;}
+  .mini-metric span{display:block;font-size:11.5px;color:var(--ink-soft);margin-bottom:2px;}
+  .mini-metric strong{font-family:'JetBrains Mono',monospace;font-size:13px;}
+  @media(max-width:560px){.quick-actions{grid-template-columns:1fr 1fr;}.entry{grid-template-columns:6px 1fr;}.entry-side{grid-column:2;text-align:left;}.filter-summary{grid-template-columns:1fr 1fr 1fr;}}
+
+
+  .session-bar{display:flex;justify-content:flex-end;align-items:center;gap:8px;margin:12px 0 0;}
+  .user-chip{background:var(--cream-card);border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:12.5px;font-weight:700;color:var(--maroon);}
+  .logout-btn{border:1px solid var(--line);background:var(--ivory);color:var(--ink-soft);border-radius:8px;padding:6px 9px;font-family:'Hind',sans-serif;font-size:12px;font-weight:700;cursor:pointer;}
+  .entry-user{display:inline-flex;align-items:center;background:#F3DCEE;color:var(--maroon);border-radius:999px;padding:2px 7px;font-size:10.5px;font-weight:700;margin-left:4px;}
+
+  .success-toast{
+    position:fixed;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%) scale(.96);
+    background:#2f6b3a;
+    color:#fff;
+    padding:18px 24px;
+    border-radius:14px;
+    font-family:'Noto Sans Gujarati','Hind',sans-serif;
+    font-size:16px;
+    font-weight:700;
+    box-shadow:0 14px 40px rgba(0,0,0,.28);
+    opacity:0;
+    visibility:hidden;
+    z-index:10000;
+    transition:all .18s ease;
+    text-align:center;
+    width:min(420px,calc(100% - 36px));
+    line-height:1.55;
+  }
+  .success-toast.show{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1);}
+  .success-toast.error{background:#a33a28;}
+  .success-toast.info{background:#5C1264;}
+  .success-toast.warning{background:#9a6815;}
+  .add-btn:disabled{opacity:.65;cursor:not-allowed;transform:none;}
+
+
+  /* ===== v12: passbook entries + visible session toolbar ===== */
+  .session-bar{
+    display:flex;justify-content:space-between;align-items:center;gap:10px;
+    margin:14px 0 10px;padding:9px 11px;background:var(--cream-card);
+    border:1px solid var(--line);border-radius:11px;position:relative;z-index:3;
+  }
+  .session-left{display:flex;align-items:center;gap:8px;min-width:0;flex-wrap:wrap;}
+  .live-time{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-soft);white-space:nowrap;}
+  .logout-btn{flex:0 0 auto;background:var(--maroon);color:#fff;border-color:var(--maroon);padding:7px 11px;}
+
+  .entries-list{display:block;overflow:visible;background:var(--cream-card);border:1px solid var(--line);border-radius:12px;}
+  .passbook-table{width:100%;border-collapse:collapse;table-layout:fixed;}
+  .passbook-table th{background:var(--maroon);color:#fff;padding:10px 6px;font-size:clamp(9px,1.7vw,12px);text-align:center;border-right:1px solid rgba(255,255,255,.18);white-space:normal;overflow-wrap:anywhere;}
+  .passbook-table th:nth-child(1){width:14%;}
+  .passbook-table th:nth-child(2){width:44%;text-align:left;}
+  .passbook-table th:nth-child(3){width:14%;}
+  .passbook-table th:nth-child(4){width:14%;}
+  .passbook-table th:nth-child(5){width:14%;}
+  .passbook-table td{padding:10px 6px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);vertical-align:top;font-size:clamp(10px,1.8vw,12.5px);min-width:0;overflow-wrap:anywhere;word-break:break-word;}
+  .passbook-table tr:last-child td{border-bottom:0;}
+  .pb-date{white-space:nowrap;color:var(--ink);font-weight:600;}
+  .pb-time{display:block;font-size:10.5px;color:var(--ink-soft);margin-top:2px;font-weight:400;}
+  .pb-desc strong{display:block;font-size:13px;color:var(--ink);margin-bottom:3px;}
+  .pb-desc small{display:block;color:var(--ink-soft);line-height:1.45;}
+  .pb-user{display:inline-block;margin-top:4px;padding:2px 6px;border-radius:999px;background:#F3DCEE;color:var(--maroon);font-size:10px;font-weight:700;}
+  .pb-money{font-family:'JetBrains Mono',monospace;font-weight:700;text-align:right;white-space:nowrap;}
+  .pb-withdraw{color:var(--rust);}
+  .pb-deposit{color:var(--green);}
+  .pb-balance{color:var(--marigold-deep);}
+  .pb-actions{margin-top:6px;display:flex;gap:5px;flex-wrap:wrap;}
+  .pb-actions button{margin:0;}
+  .contact-btn{border:1px solid var(--line);background:#fff;color:var(--maroon);border-radius:8px;padding:7px 10px;font-family:'Hind',sans-serif;font-weight:700;cursor:pointer;white-space:nowrap;}
+  .session-actions{display:flex;gap:7px;align-items:center;flex-wrap:wrap;justify-content:flex-end;}
+  .contact-modal{position:fixed;inset:0;background:rgba(35,20,10,.46);display:none;align-items:center;justify-content:center;padding:18px;z-index:9998;}
+  .contact-modal.show{display:flex;}
+  .contact-card{width:min(420px,100%);background:var(--cream-card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 18px 45px rgba(0,0,0,.18);}
+  .contact-card h3{margin:0 0 4px;color:var(--maroon);font-family:'Yatra One',cursive;font-size:20px;}
+  .contact-card .contact-sub{margin:0 0 14px;color:var(--ink-soft);font-size:13px;}
+  .contact-display{background:var(--ivory);border:1px solid var(--line);border-radius:11px;padding:13px;margin-bottom:12px;}
+  .contact-name{font-size:17px;font-weight:700;color:var(--ink);margin-bottom:3px;}
+  .contact-phone{font-family:'JetBrains Mono',monospace;font-size:16px;color:var(--maroon);font-weight:700;}
+  .contact-phone-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:2px;}
+  .contact-inline-delete{display:none;flex:0 0 auto;width:34px;height:34px;border:1px solid #e7a89b;background:#fff3ef;color:var(--rust);border-radius:8px;cursor:pointer;font-size:15px;align-items:center;justify-content:center;}
+  .contact-inline-delete.show{display:flex;}
+  .contact-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .contact-action{border:0;border-radius:9px;padding:10px;font-family:'Hind',sans-serif;font-weight:700;cursor:pointer;text-align:center;text-decoration:none;}
+  .call-btn{background:var(--green);color:#fff;} .copy-btn{background:var(--maroon);color:#fff;}
+  .admin-contact-box{margin-top:14px;padding-top:14px;border-top:1px dashed var(--line);display:none;}
+  .admin-contact-box.show{display:block;}
+  .contact-close{width:100%;margin-top:10px;border:1px solid var(--line);background:#fff;border-radius:9px;padding:9px;font-family:'Hind',sans-serif;cursor:pointer;}
+  @media(max-width:560px){
+    .session-bar{align-items:flex-start;flex-direction:column}.session-left{gap:5px}.live-time{width:100%;}.session-actions{width:100%;justify-content:flex-start;}
+    .passbook-table th,.passbook-table td{padding:8px 4px;}
+    .passbook-table th:nth-child(1){width:16%;}.passbook-table th:nth-child(2){width:40%;}.passbook-table th:nth-child(3),.passbook-table th:nth-child(4){width:14%;}.passbook-table th:nth-child(5){width:16%;}
+    .pb-user{font-size:8.5px;padding:2px 4px}.pb-actions{gap:3px}.pb-actions button{padding:4px 5px;font-size:10px}.pb-time{font-size:9px}.pb-desc strong{font-size:11px}.pb-desc small{font-size:9.5px}.pb-money{font-size:10px;}
+  }
+
+  /* ===== Public dashboard v21 ===== */
+  .public-dash-btn{width:100%;margin-top:10px;padding:11px;border:1.5px solid var(--marigold-deep);border-radius:10px;background:var(--ivory);color:var(--maroon);font-family:'Hind',sans-serif;font-size:14px;font-weight:700;cursor:pointer;}
+  .dashboard-screen{display:none;min-height:100vh;background:var(--ivory);padding-bottom:40px;}
+  .dashboard-screen.show{display:block;}
+  .dashboard-top{background:linear-gradient(180deg,var(--maroon),var(--maroon-dark));color:var(--ivory);padding:18px 16px;}
+  .dashboard-top-inner{max-width:760px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+  .dashboard-top h2{margin:0;color:var(--marigold);font-family:'Noto Sans Gujarati','Hind',sans-serif;font-size:21px;}
+  .dashboard-close{padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,.35);background:transparent;color:#fff;cursor:pointer;font-weight:700;}
+  .dashboard-wrap{max-width:760px;margin:auto;padding:18px 16px;}
+  .dashboard-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+  .dash-card{background:var(--cream-card);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center;}
+  .dash-card span{display:block;color:var(--ink-soft);font-size:12px;margin-bottom:4px}.dash-card strong{font-family:'JetBrains Mono',monospace;font-size:18px;}
+  .dash-section{background:var(--cream-card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:12px;}
+  .dash-section h3{margin:0 0 10px;color:var(--maroon);font-size:16px;}
+  .dash-row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:13px}.dash-row:last-child{border-bottom:none}.dash-row b{white-space:nowrap;}
+  .dash-recent{display:grid;grid-template-columns:90px 1fr 100px;gap:8px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:12.5px;align-items:center}.dash-recent:last-child{border-bottom:none}.dash-credit{color:var(--green);font-weight:700;text-align:right}.dash-debit{color:var(--rust);font-weight:700;text-align:right}.dashboard-loading{text-align:center;padding:28px;color:var(--ink-soft)}
+  .dashboard-action-btn{padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--cream-card);color:var(--maroon);font-family:'Hind',sans-serif;font-weight:700;cursor:pointer;}
+  @media(max-width:560px){.dashboard-summary{grid-template-columns:1fr}.dash-recent{grid-template-columns:75px 1fr 82px}.dashboard-top-inner{align-items:flex-start}.dashboard-top h2{font-size:18px}}
+
+</style>
+</head>
+<body>
+
+<div id="loginScreen" class="login-screen">
+  <div class="login-card">
+    <p class="login-eyebrow">જય માતાજી</p>
+    <h2 class="login-title">નવરાત્રિ યુવક મંડળ</h2>
+    <p class="login-sub">તમારા યુઝર આઈડી અને પાસવર્ડથી લોગિન કરો</p>
+    <div class="field">
+      <label>યુઝર આઈડી</label>
+      <input type="text" id="loginUser" placeholder="યુઝર આઈડી" autocomplete="username">
+    </div>
+    <div class="field">
+      <label>પાસવર્ડ</label>
+      <input type="password" id="loginPass" placeholder="પાસવર્ડ" autocomplete="current-password">
+    </div>
+    <p class="login-error" id="loginError">યુઝર આઈડી અથવા પાસવર્ડ ખોટો છે.</p>
+    <button type="button" class="add-btn" id="loginBtn">લોગિન કરો</button>
+    <button type="button" class="public-dash-btn" id="publicDashboardBtn">📊 જાહેર ડેશબોર્ડ જુઓ</button>
+  </div>
+</div>
+
+
+<div id="appContent" style="display:none;">
+  <div class="header">
+    <p class="eyebrow">જય માતાજી</p>
+    <h1 class="title">નવરાત્રિ યુવક મંડળ</h1>
+    <p class="subtitle">સાર્વજનિક નવરાત્રિ મહોત્સવ – 2026 · કેશ બુક / હિસાબ</p>
+      </div>
+
+  <div class="wrap">
+    <div class="session-bar">
+      <div class="session-left">
+        <span class="user-chip" id="loggedUser">વપરાશકર્તા</span>
+        <span class="live-time" id="liveTime">--</span><span class="live-time" style="font-weight:700;color:var(--maroon);">પાસબુક દર્શન</span>
+      </div>
+      <div class="session-actions">
+        <button type="button" class="dashboard-action-btn" id="appDashboardBtn">📊 ડેશબોર્ડ</button>
+        <button type="button" class="contact-btn" id="contactBtn">☎ સંપર્ક</button>
+        <button type="button" class="logout-btn" id="logoutBtn">લોગઆઉટ</button>
+      </div>
+    </div>
+    <div class="summary">
+      <div class="metric daan"><p class="label">કુલ દાન</p><p class="value" id="totalDaan">₹0</p></div>
+      <div class="metric kharch"><p class="label">કુલ ખર્ચ</p><p class="value" id="totalKharch">₹0</p></div>
+      <div class="metric balance"><p class="label">હાલ બેલેન્સ</p><p class="value" id="totalBalance">₹0</p></div>
+    </div>
+
+    <div class="quick-actions">
+      <button type="button" class="quick-btn primary active" id="showAddBtn">＋ નવી એન્ટ્રી</button>
+      <button type="button" class="quick-btn secondary" id="showEntriesBtn">📒 બધી એન્ટ્રી જુઓ</button>
+    </div>
+
+    <section id="addSection" class="panel-section">
+      <h2 class="section-title"><span class="diya">🪔</span>નવી એન્ટ્રી</h2>
+      <div class="form-card">
+        <div class="type-toggle">
+          <button type="button" class="type-btn daan active" id="btnDaan">પૈસા આવ્યા</button>
+          <button type="button" class="type-btn kharch" id="btnKharch">પૈસા ગયા</button>
+        </div>
+        <div class="field"><label id="nameLabel">દાતાનું નામ</label><input type="text" id="nameInput" placeholder="દા.ત. — શર્મા પરિવાર"></div>
+        <div class="field" id="collectedByField"><label>મંડળ સભ્યનું નામ</label><input type="text" id="collectedByInput" placeholder="દા.ત. — Kishan"></div>
+        <div class="row2">
+          <div class="field"><label>રકમ (₹)</label><input type="number" id="amountInput" placeholder="0" min="0" step="1"></div>
+          <div class="field"><label>તારીખ</label><input type="date" id="dateInput"></div>
+        </div>
+        <div class="field" id="categoryField" style="display:none;"><label>ખર્ચ કયા કામ માટે</label><select id="categoryInput"><option value="મંડપ અને ડેકોરેશન">મંડપ અને ડેકોરેશન</option><option value="મૂર્તિ">મૂર્તિ</option><option value="લાઇટ અને સાઉન્ડ">લાઇટ અને સાઉન્ડ</option><option value="પૂજા સામગ્રી">પૂજા સામગ્રી</option><option value="પ્રસાદ અને ભોગ">પ્રસાદ અને ભોગ</option><option value="અન્ય">અન્ય (જાતે લખો)</option></select></div>
+        <div class="field" id="customCategoryField" style="display:none;"><label>નવી કેટેગરી</label><input type="text" id="customCategoryInput" placeholder="દા.ત. — જનરેટર ભાડું"></div>
+        <div class="field" id="paidToField" style="display:none;"><label>સામે વાળાનું નામ</label><input type="text" id="paidToInput" placeholder="દા.ત. — શર્મા ડેકોરેટર"></div>
+        <div class="field" id="paidByField" style="display:none;"><label>મંડળ સભ્યનું નામ</label><input type="text" id="paidByInput" placeholder="દા.ત. — Naresh"></div>
+        <div class="field"><label>નોંધ</label><input type="text" id="noteInput" placeholder="વધુ માહિતી હોય તો લખો"></div>
+        <p class="error-msg" id="errorMsg">રકમ અને વિગત બંને ભરવા જરૂરી છે.</p>
+        <p class="editing-banner" id="editingBanner">✏️ તમે એક એન્ટ્રી એડિટ કરી રહ્યા છો</p>
+        <button type="button" class="add-btn" id="addBtn">+ એન્ટ્રી ઉમેરો</button>
+        <button type="button" class="cancel-edit-btn" id="cancelEditBtn">એડિટ રદ કરો</button>
+      </div>
+    </section>
+
+    <section id="entriesSection" class="panel-section is-hidden">
+      <div class="ledger-toolbar"><h2 class="section-title"><span class="diya">📒</span>બધી એન્ટ્રી</h2><button type="button" class="close-panel-btn" id="closeEntriesBtn">બંધ કરો</button></div>
+      <div class="filter-card">
+        <p class="filter-title">તારીખ પ્રમાણે હિસાબ જુઓ</p>
+        <div class="row2">
+          <div class="field"><label>તારીખથી</label><input type="date" id="dateFromFilter"></div>
+          <div class="field"><label>તારીખ સુધી</label><input type="date" id="dateToFilter"></div>
+        </div>
+      </div>
+      <div class="filter-summary">
+        <div class="mini-metric"><span>પસંદ કરેલ દાન</span><strong id="filteredDaan">₹0</strong></div>
+        <div class="mini-metric"><span>પસંદ કરેલ ખર્ચ</span><strong id="filteredKharch">₹0</strong></div>
+        <div class="mini-metric"><span>બેલેન્સ</span><strong id="filteredBalance">₹0</strong></div>
+      </div>
+      <div id="entriesList" class="entries-list"><div class="loading">લોડ થઈ રહ્યું છે...</div></div>
+      <p id="statusMsg" style="font-size:12.5px;text-align:center;margin-top:8px;display:none;"></p>
+    </section>
+
+    <p class="note">તારીખ ખાલી રાખશો તો બધી એન્ટ્રી દેખાશે. તારીખ પસંદ કરશો તો એ તારીખ પ્રમાણે કુલ દાન, કુલ ખર્ચ, બેલેન્સ અને એન્ટ્રીઓ બદલાશે.</p>
+  </div>
+</div>
+
+
+<div id="dashboardScreen" class="dashboard-screen" aria-hidden="true">
+  <div class="dashboard-top"><div class="dashboard-top-inner">
+    <div><div style="font-size:12px;opacity:.8">નવરાત્રિ યુવક મંડળ · 2026</div><h2>જાહેર હિસાબ ડેશબોર્ડ</h2></div>
+    <button type="button" class="dashboard-close" id="closeDashboardBtn">બંધ કરો</button>
+  </div></div>
+  <div class="dashboard-wrap">
+    <div id="dashboardLoading" class="dashboard-loading">હિસાબ લોડ થઈ રહ્યો છે...</div>
+    <div id="dashboardContent" style="display:none">
+      <div class="dashboard-summary">
+        <div class="dash-card"><span>કુલ દાન</span><strong id="dashDaan">₹0</strong></div>
+        <div class="dash-card"><span>કુલ ખર્ચ</span><strong id="dashKharch">₹0</strong></div>
+        <div class="dash-card"><span>હાલ બેલેન્સ</span><strong id="dashBalance">₹0</strong></div>
+      </div>
+      <div class="dash-section"><h3>ખર્ચ ક્યાં થયો</h3><div id="dashCategories"></div></div>
+      <div class="dash-section"><h3>તાજેતરની એન્ટ્રીઓ</h3><div id="dashRecent"></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="contactModal" class="contact-modal" aria-hidden="true">
+  <div class="contact-card">
+    <h3>મંડળ સંપર્ક</h3>
+    <p class="contact-sub">કોલ કરો, નંબર કૉપી કરો અથવા સંપર્કની માહિતી બદલીને સેવ કરો.</p>
+    <div class="contact-display">
+      <div class="contact-name" id="contactNameView">સંપર્ક સેટ નથી</div>
+      <div class="contact-phone-row"><div class="contact-phone" id="contactPhoneView">—</div><button type="button" id="deleteContactBtn" class="contact-inline-delete" aria-label="સંપર્ક ડિલીટ કરો" title="સંપર્ક ડિલીટ કરો">🗑</button></div>
+    </div>
+    <div class="contact-actions">
+      <a id="callContactBtn" class="contact-action call-btn" href="#">📞 કોલ કરો</a>
+      <button type="button" id="copyContactBtn" class="contact-action copy-btn">📋 નંબર કૉપી</button>
+    </div>
+    <div id="adminContactBox" class="admin-contact-box">
+      <div class="field"><label>સંપર્કનું નામ</label><input type="text" id="contactNameInput" placeholder="દા.ત. — Vikash"></div>
+      <div class="field"><label>મોબાઇલ નંબર</label><input type="tel" id="contactPhoneInput" placeholder="દા.ત. — 9876543210"></div>
+      <button type="button" class="add-btn" id="saveContactBtn">સંપર્ક સેવ કરો</button>
+    </div>
+    <button type="button" class="contact-close" id="closeContactBtn">બંધ કરો</button>
+  </div>
+</div>
+
+<div id="successToast" class="success-toast" role="status" aria-live="polite"></div>
+
+<script>
+/* v14: Passbook layout + live time + secure users + fast login/save + duplicate protection */
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzlpbQk5MWot3XTBCHR4Iu80ZemPVhVOUvooCMoEbsPvgA2tiUwUkoxUeqSGT6tKKuCKA/exec';
+let sessionToken=localStorage.getItem('navratriSessionToken')||'';
+let currentUser=localStorage.getItem('navratriCurrentUser')||'';
+let currentUserRole=localStorage.getItem('navratriCurrentUserRole')||'';
+let entries=[]; let entriesLoaded=false; let currentType='daan'; let filterDateFrom=''; let filterDateTo=''; let editingId=null;
+let contactInfo={name:'',phone:''};
+let isSaving=false;
+let pendingSubmission=null;
+
+try{const p=JSON.parse(localStorage.getItem('navratriPendingEntry')||'null');if(p&&p.entry&&p.signature)pendingSubmission=p;}catch(e){}
+
+const $=id=>document.getElementById(id);
+function fmtMoney(n){return '₹'+Math.round(Number(n)||0).toLocaleString('en-IN');}
+function indiaToday(){
+  const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Kolkata',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  const get=t=>parts.find(p=>p.type===t)?.value||'';
+  return `${get('year')}-${get('month')}-${get('day')}`;
+}
+function esc(v){const d=document.createElement('div');d.textContent=v??'';return d.innerHTML;}
+function showStatus(msg,isError){const el=$('statusMsg');if(!el)return;el.textContent=msg;el.style.color=isError?'var(--rust)':'var(--ink-soft)';el.style.display=msg?'block':'none';}
+let toastTimer=null;
+function showCenterNotice(msg,type='success',duration=2600){
+  const el=$('successToast');
+  if(!el)return;
+  el.textContent=msg;
+  el.className='success-toast '+type+' show';
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>{el.classList.remove('show');},duration);
+}
+function showSuccessToast(msg){showCenterNotice(msg,'success',2600);}
+
+async function loadEntries(){
+  try{
+    showStatus('Data load thai rahyu chhe...',false);
+    const res=await fetch(SCRIPT_URL+'?token='+encodeURIComponent(sessionToken));
+    const data=await res.json();
+    if(!data.success&&data.unauthorized){forceLogout('સેશન પૂર્ણ થયું. ફરી લોગિન કરો.');return;}
+    const list=Array.isArray(data)?data:(data.entries||[]);
+    entries=list.map(e=>({...e,amount:Number(e.amount)||0,ts:Number(e.ts)||0,balance:Number(e.balance)||0,entryBy:e.entryBy||'',updatedBy:e.updatedBy||''}));
+    entriesLoaded=true;
+    if(data.config) setContactInfo(data.config);
+    if(data.user&&data.user.name){
+      currentUser=data.user.name;
+      currentUserRole=data.user.role||'user';
+      localStorage.setItem('navratriCurrentUser',currentUser);
+      localStorage.setItem('navratriCurrentUserRole',currentUserRole);
+    }
+    $('loggedUser').textContent='👤 '+(currentUser||'વપરાશકર્તા')+(currentUserRole==='admin'?' · એડમિન':'');
+    showStatus('',false);render();
+  }catch(e){entries=[];showStatus('Data load na thayu — internet check karo.',true);render();}
+}
+async function apiPost(payload,includeToken=true,timeoutMs=15000){
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),timeoutMs);
+  try{
+    const body=includeToken?{...payload,token:sessionToken}:payload;
+    const res=await fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body),signal:controller.signal});
+    const data=await res.json();
+    if(data&&data.unauthorized){forceLogout('સેશન પૂર્ણ થયું. ફરી લોગિન કરો.');return null;}
+    return data;
+  }catch(e){
+    return {success:false,networkError:true,error:e&&e.name==='AbortError'?'Request timeout':'Network error'};
+  }finally{clearTimeout(timer);}
+}
+function matchDate(e){if(!filterDateFrom&&!filterDateTo)return true;if(!e.entryDate)return false;if(filterDateFrom&&e.entryDate<filterDateFrom)return false;if(filterDateTo&&e.entryDate>filterDateTo)return false;return true;}
+
+function render(){
+  const filtered=entries.filter(matchDate).sort((a,b)=>{
+    const da=(a.entryDate||'').localeCompare(b.entryDate||'');
+    return da||((a.ts||0)-(b.ts||0));
+  });
+
+  const totalDaan=filtered.filter(e=>e.type==='daan').reduce((s,e)=>s+e.amount,0);
+  const totalKharch=filtered.filter(e=>e.type==='kharch').reduce((s,e)=>s+e.amount,0);
+  const balance=totalDaan-totalKharch;
+
+  $('totalDaan').textContent=fmtMoney(totalDaan);
+  $('totalKharch').textContent=fmtMoney(totalKharch);
+  $('totalBalance').textContent=fmtMoney(balance);
+  $('filteredDaan').textContent=fmtMoney(totalDaan);
+  $('filteredKharch').textContent=fmtMoney(totalKharch);
+  $('filteredBalance').textContent=fmtMoney(balance);
+
+  // Passbook running balance is calculated client-side in chronological order.
+  const allChronological=entries.slice().sort((a,b)=>{
+    const da=(a.entryDate||'').localeCompare(b.entryDate||'');
+    return da||((a.ts||0)-(b.ts||0));
+  });
+  let rb=0; const runningBalanceById={};
+  allChronological.forEach(e=>{rb+=e.type==='daan'?e.amount:-e.amount;runningBalanceById[e.id]=rb;});
+
+  const list=$('entriesList');
+  if(!filtered.length){
+    list.innerHTML='<div class="empty">આ તારીખ માટે કોઈ એન્ટ્રી નથી.</div>';
+    return;
+  }
+  list.innerHTML=`<table class="passbook-table">
+    <thead><tr>
+      <th>તારીખ</th>
+      <th>વિગત / વર્ણન</th>
+      <th>ખર્ચ</th>
+      <th>દાન</th>
+      <th>બેલેન્સ</th>
+    </tr></thead>
+    <tbody>${filtered.map(e=>passbookRow(e,runningBalanceById[e.id])).join('')}</tbody>
+  </table>`;
+  document.querySelectorAll('.small-edit').forEach(btn=>btn.onclick=()=>{
+    const e=entries.find(x=>x.id===btn.dataset.id); if(e)startEditEntry(e);
+  });
+  document.querySelectorAll('.small-delete').forEach(btn=>btn.onclick=()=>deleteEntry(btn.dataset.id));
+}
+
+function passbookRow(e,displayBalance){
+  const isCredit=e.type==='daan';
+  const detail=[];
+  if(isCredit){
+    if(e.collectedBy) detail.push('મંડળ સભ્ય: '+e.collectedBy);
+    if(e.note) detail.push('નોંધ: '+e.note);
+  }else{
+    if(e.category) detail.push('કામ: '+e.category);
+    if(e.paidTo) detail.push('સામે વાળાનું નામ: '+e.paidTo);
+    if(e.paidBy) detail.push('મંડળ સભ્ય: '+e.paidBy);
+    if(e.note) detail.push('નોંધ: '+e.note);
+  }
+  const when=formatDateTime(e.entryDate,e.ts);
+  return `<tr>
+    <td class="pb-date">${esc(when.date)}<span class="pb-time">${esc(when.time)}</span></td>
+    <td class="pb-desc">
+      <strong>${esc(e.name)}</strong>
+      <small>${esc(detail.join(' · ')||'—')}</small>
+      ${e.entryBy?`<span class="pb-user">👤 એન્ટ્રી કરનાર: ${esc(e.entryBy)}${e.updatedBy?` · છેલ્લે સુધારનાર: ${esc(e.updatedBy)}`:``}</span>`:''}
+      <div class="pb-actions">
+        <button class="small-edit" data-id="${esc(e.id)}">✎ એડિટ</button>
+        ${currentUserRole==='admin'?`<button class="small-delete" data-id="${esc(e.id)}">🗑 ડિલીટ</button>`:''}
+      </div>
+    </td>
+    <td class="pb-money pb-withdraw">${!isCredit?fmtMoney(e.amount):''}</td>
+    <td class="pb-money pb-deposit">${isCredit?fmtMoney(e.amount):''}</td>
+    <td class="pb-money pb-balance">${fmtMoney(displayBalance)}</td>
+  </tr>`;
+}
+
+function formatDateTime(dateValue,ts){
+  const date=formatDisplayDate(dateValue);
+  const d=new Date(Number(ts)||Date.now());
+  const time=isNaN(d.getTime())?'':d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  return {date,time};
+}
+
+function formatDisplayDate(v){const p=String(v).split('-');return p.length===3?`${p[2]}-${p[1]}-${p[0]}`:v;}
+
+function setType(type){
+ currentType=type; const income=type==='daan';
+ $('btnDaan').classList.toggle('active',income);$('btnKharch').classList.toggle('active',!income);
+ $('nameLabel').textContent=income?'દાતાનું નામ':'ખર્ચની વિગત';
+ $('nameInput').placeholder=income?'દા.ત. — શર્મા પરિવાર':'દા.ત. — ડેકોરેશન / પ્રિન્ટિંગ';
+ $('collectedByField').style.display=income?'block':'none';$('categoryField').style.display=income?'none':'block';$('paidToField').style.display=income?'none':'block';$('paidByField').style.display=income?'none':'block';if(income)$('customCategoryField').style.display='none';
+}
+$('btnDaan').onclick=()=>setType('daan'); $('btnKharch').onclick=()=>setType('kharch');
+$('categoryInput').onchange=()=>{$('customCategoryField').style.display=$('categoryInput').value==='અન્ય'?'block':'none';};
+
+$('showAddBtn').onclick=()=>{
+  unlockAudio();
+  $('showAddBtn').classList.add('active');
+  $('showEntriesBtn').classList.remove('active');
+  $('entriesSection').classList.add('is-hidden');
+  $('addSection').classList.remove('is-hidden');
+  resetForm();
+  $('addSection').scrollIntoView({behavior:'smooth',block:'start'});
+};
+$('showEntriesBtn').onclick=()=>{
+  $('showEntriesBtn').classList.add('active');
+  $('showAddBtn').classList.remove('active');
+  $('addSection').classList.add('is-hidden');
+  $('entriesSection').classList.remove('is-hidden');
+  $('entriesSection').scrollIntoView({behavior:'smooth',block:'start'});
+};
+$('closeEntriesBtn').onclick=()=>{$('entriesSection').classList.add('is-hidden');$('showEntriesBtn').classList.remove('active');window.scrollTo({top:0,behavior:'smooth'});};
+
+function startEditEntry(e){
+ editingId=e.id;setType(e.type);$('nameInput').value=e.name||'';$('amountInput').value=e.amount||'';$('dateInput').value=e.entryDate||'';$('noteInput').value=e.note||'';$('collectedByInput').value=e.collectedBy||'';$('paidToInput').value=e.paidTo||'';$('paidByInput').value=e.paidBy||'';
+ if(e.type==='kharch'){const opts=[...$('categoryInput').options].map(o=>o.value);if(e.category&&opts.includes(e.category)){$('categoryInput').value=e.category;$('customCategoryField').style.display='none';}else if(e.category){$('categoryInput').value='અન્ય';$('customCategoryField').style.display='block';$('customCategoryInput').value=e.category;}}
+ $('addBtn').textContent='✓ એન્ટ્રી અપડેટ કરો';$('editingBanner').style.display='block';$('cancelEditBtn').style.display='block';$('addSection').classList.remove('is-hidden');$('addSection').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function resetForm(){
+  editingId=null;
+  $('addBtn').textContent='+ એન્ટ્રી ઉમેરો';
+  $('editingBanner').style.display='none';
+  $('cancelEditBtn').style.display='none';
+  ['nameInput','amountInput','collectedByInput','paidToInput','paidByInput','noteInput','customCategoryInput'].forEach(id=>$(id).value='');
+  $('customCategoryField').style.display='none';
+  $('dateInput').value=indiaToday();
+}
+$('cancelEditBtn').onclick=resetForm;
+
+async function deleteEntry(id){
+  prepareVoice();
+  const entry=entries.find(e=>e.id===id);
+  if(!entry)return;
+  const ok=confirm('શું તમે આ એન્ટ્રી ડિલીટ કરવા માંગો છો?');
+  if(!ok)return;
+  showStatus('એન્ટ્રી ડિલીટ થઈ રહી છે...',false);
+  const result=await apiPost({action:'delete',id});
+  if(!result||!result.success){
+    showStatus((result&&result.error)||'એન્ટ્રી ડિલીટ થઈ શકી નથી.',true);
+    return;
+  }
+  entries=entries.filter(e=>e.id!==id);
+  render();
+  showStatus('',false);
+  showCenterNotice('✅ એન્ટ્રી ગૂગલ શીટમાંથી પણ ડિલીટ થઈ ગઈ','success',3000);
+  playEntryDeletedAudio();
+}
+
+$('addBtn').onclick=async()=>{
+ prepareVoice();
+ unlockAudio();
+ if(isSaving){
+   showCenterNotice('પહેલાની એન્ટ્રી સેવ થઈ રહી છે. કૃપા કરીને રાહ જુઓ.','warning',2200);
+   return;
+ }
+ const name=$('nameInput').value.trim(), amount=parseFloat($('amountInput').value), entryDate=$('dateInput').value, note=$('noteInput').value.trim();
+ let category=currentType==='kharch'?$('categoryInput').value:'';if(category==='અન્ય'){const c=$('customCategoryInput').value.trim();if(c)category=c;}
+ const paidTo=currentType==='kharch'?$('paidToInput').value.trim():'', paidBy=currentType==='kharch'?$('paidByInput').value.trim():'', collectedBy=currentType==='daan'?$('collectedByInput').value.trim():'';
+ if(!name||isNaN(amount)||amount<=0||!entryDate){
+   $('errorMsg').style.display='block';
+   showCenterNotice('એન્ટ્રી પૂર્ણ નથી. જરૂરી માહિતી ભરો.','error',2600);
+   return;
+ }
+ $('errorMsg').style.display='none';
+ const existing=editingId?entries.find(e=>e.id===editingId):null;
+ const signature=[editingId||'',currentType,name,amount,entryDate,note,category,paidTo,paidBy,collectedBy].join('|');
+ let entry;
+ if(!editingId && pendingSubmission && pendingSubmission.signature===signature){
+   entry=pendingSubmission.entry; // retry with SAME ID so backend cannot duplicate it
+ }else{
+   entry={id:editingId||Date.now().toString()+Math.random().toString(36).slice(2,9),type:currentType,name,amount,entryDate,note,category,paidTo,paidBy,collectedBy,receivedFrom:currentType==='daan'?name:'',ts:existing?existing.ts:Date.now(),entryBy:existing?(existing.entryBy||currentUser):currentUser,updatedBy:editingId?currentUser:''};
+   if(!editingId){pendingSubmission={signature,entry};localStorage.setItem('navratriPendingEntry',JSON.stringify(pendingSubmission));}
+ }
+ const action=editingId?'edit':'add';
+ isSaving=true;
+ $('addBtn').disabled=true;
+ const oldBtnText=$('addBtn').textContent;
+ $('addBtn').textContent=action==='add'?'સેવ થઈ રહી છે...':'અપડેટ થઈ રહી છે...';
+ showCenterNotice(action==='add'?'એન્ટ્રી સેવ થઈ રહી છે...':'એન્ટ્રી અપડેટ થઈ રહી છે...','info',15000);
+ const result=await apiPost({action,...entry});
+ isSaving=false;
+ $('addBtn').disabled=false;
+ $('addBtn').textContent=oldBtnText;
+ if(!result||!result.success){
+   showCenterNotice('એન્ટ્રી સેવ થઈ નથી. તમારી માહિતી અહીં જ છે — ફરી પ્રયાસ કરો.','error',4200);
+   showStatus('ગૂગલ શીટ તરફથી સેવ થયાની ખાતરી મળી નથી.',true);
+   return;
+ }
+ // Only after confirmed backend success do we update the UI and clear the form.
+ let savedForAudio=entry;
+ if(action==='add'){
+   const saved=result.entry||entry;
+   savedForAudio={...entry,...saved,amount:Number(saved.amount)||amount,ts:Number(saved.ts)||entry.ts};
+   if(!entries.some(e=>e.id===saved.id)) entries.push(savedForAudio);
+   pendingSubmission=null;localStorage.removeItem('navratriPendingEntry');
+ }else{
+   entries=entries.map(e=>e.id===entry.id?{...e,...entry,updatedBy:currentUser}:e);
+ }
+ render();
+ resetForm();
+ showStatus('',false);
+ showCenterNotice(action==='add'?(currentType==='daan'?`✅ ${name} તરફથી ${fmtMoney(amount)} દાન સેવ થયું`:`✅ ${name} માટે ${fmtMoney(amount)} ખર્ચ સેવ થયો`):'✅ એન્ટ્રી સફળતાપૂર્વક અપડેટ થઈ ગઈ','success',3400);
+ if(action==='add') playEntrySavedAudio(savedForAudio); else playEntryUpdatedAudio();
+};
+
+$('dateFromFilter').onchange=e=>{filterDateFrom=e.target.value;render();};
+$('dateToFilter').onchange=e=>{filterDateTo=e.target.value;render();};
+$('dateInput').value=indiaToday();
+
+function cleanPhone(v){return String(v||'').replace(/[^0-9+]/g,'');}
+function setContactInfo(info){
+  contactInfo={name:String((info&&info.name)||''),phone:String((info&&info.phone)||'')};
+  const name=contactInfo.name||'સંપર્ક સેટ નથી';
+  const phone=contactInfo.phone||'—';
+  if($('contactNameView')) $('contactNameView').textContent=name;
+  if($('contactPhoneView')) $('contactPhoneView').textContent=phone;
+  if($('callContactBtn')){
+    const p=cleanPhone(contactInfo.phone);
+    $('callContactBtn').href=p?'tel:'+p:'#';
+    $('callContactBtn').style.opacity=p?'1':'.5';
+    $('callContactBtn').style.pointerEvents=p?'auto':'none';
+  }
+  if($('contactNameInput')) $('contactNameInput').value=contactInfo.name;
+  if($('contactPhoneInput')) $('contactPhoneInput').value=contactInfo.phone;
+}
+function openContact(){
+  setContactInfo(contactInfo);
+  $('adminContactBox').classList.add('show');
+  if($('deleteContactBtn')) $('deleteContactBtn').classList.toggle('show',currentUserRole==='admin' && !!contactInfo.phone);
+  $('contactModal').classList.add('show');
+  $('contactModal').setAttribute('aria-hidden','false');
+}
+function closeContact(){ $('contactModal').classList.remove('show'); $('contactModal').setAttribute('aria-hidden','true'); }
+$('contactBtn').onclick=openContact; $('closeContactBtn').onclick=closeContact;
+$('contactModal').onclick=e=>{if(e.target===$('contactModal'))closeContact();};
+$('copyContactBtn').onclick=async()=>{
+  if(!contactInfo.phone){showCenterNotice('સંપર્ક નંબર સેટ નથી.','error',2200);return;}
+  try{await navigator.clipboard.writeText(contactInfo.phone);showCenterNotice('✅ નંબર કૉપી થઈ ગયો','success',1800);}
+  catch(e){
+    const t=document.createElement('textarea');t.value=contactInfo.phone;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();showCenterNotice('✅ નંબર કૉપી થઈ ગયો','success',1800);
+  }
+};
+$('saveContactBtn').onclick=async()=>{
+  const name=$('contactNameInput').value.trim(), phone=$('contactPhoneInput').value.trim();
+  if(!name||cleanPhone(phone).length<8){showCenterNotice('નામ અને સાચો મોબાઇલ નંબર લખો.','error',2500);return;}
+  $('saveContactBtn').disabled=true;$('saveContactBtn').textContent='સેવ થઈ રહ્યું છે...';
+  const result=await apiPost({action:'contact_update',contactName:name,contactPhone:phone});
+  $('saveContactBtn').disabled=false;$('saveContactBtn').textContent='સંપર્ક સેવ કરો';
+  if(!result||!result.success){showCenterNotice((result&&result.error)||'સંપર્ક સેવ થયો નથી.','error',2800);return;}
+  setContactInfo(result.config||{name,phone});
+  showCenterNotice('✅ મંડળ સંપર્ક સેવ થઈ ગયો','success',2200);
+};
+
+$('deleteContactBtn').onclick=async()=>{
+  if(currentUserRole!=='admin') return;
+  if(!contactInfo.name && !contactInfo.phone){showCenterNotice('ડિલીટ કરવા માટે કોઈ સંપર્ક સેવ નથી.','warning',2200);return;}
+  if(!confirm('શું તમે મંડળનો સેવ કરેલો સંપર્ક ડિલીટ કરવા માંગો છો?')) return;
+  $('deleteContactBtn').disabled=true;
+  const result=await apiPost({action:'contact_delete'});
+  $('deleteContactBtn').disabled=false;
+  if(!result||!result.success){showCenterNotice((result&&result.error)||'સંપર્ક ડિલીટ થયો નથી.','error',2800);return;}
+  setContactInfo({name:'',phone:''});
+  showCenterNotice('✅ સંપર્ક ડિલીટ થઈ ગયો','success',2400);
+  playContactDeletedAudio();
+};
+
+
+let navratriAudioCtx=null;
+function unlockAudio(){
+  try{
+    const Ctx=window.AudioContext||window.webkitAudioContext;
+    if(!Ctx)return;
+    if(!navratriAudioCtx) navratriAudioCtx=new Ctx();
+    if(navratriAudioCtx.state==='suspended') navratriAudioCtx.resume();
+  }catch(e){}
+}
+function prepareVoice(){
+  try{
+    if(!('speechSynthesis' in window)) return;
+    speechSynthesis.getVoices();
+    if(speechSynthesis.paused) speechSynthesis.resume();
+  }catch(e){}
+}
+function speakGujarati(guText,hiFallback){
+  try{
+    if(!('speechSynthesis' in window)) return;
+    speechSynthesis.cancel();
+    const speakNow=()=>{
+      try{
+        const voices=speechSynthesis.getVoices();
+        const gu=voices.find(v=>String(v.lang||'').toLowerCase()==='gu-in') ||
+                 voices.find(v=>String(v.lang||'').toLowerCase().startsWith('gu')) ||
+                 voices.find(v=>/gujarati/i.test(v.name||''));
+        const hi=voices.find(v=>String(v.lang||'').toLowerCase()==='hi-in') ||
+                 voices.find(v=>String(v.lang||'').toLowerCase().startsWith('hi')) ||
+                 voices.find(v=>/hindi/i.test(v.name||''));
+        const u=new SpeechSynthesisUtterance(gu ? guText : hiFallback);
+        u.lang=gu?'gu-IN':'hi-IN';
+        if(gu) u.voice=gu; else if(hi) u.voice=hi;
+        u.rate=0.82;
+        u.pitch=1;
+        u.volume=1;
+        speechSynthesis.speak(u);
+      }catch(e){}
+    };
+    const voices=speechSynthesis.getVoices();
+    if(voices.length){ speakNow(); }
+    else{
+      let done=false;
+      const onVoices=()=>{if(done)return;done=true;speechSynthesis.removeEventListener('voiceschanged',onVoices);speakNow();};
+      speechSynthesis.addEventListener('voiceschanged',onVoices);
+      setTimeout(()=>{if(!done){done=true;speechSynthesis.removeEventListener('voiceschanged',onVoices);speakNow();}},500);
+    }
+  }catch(e){}
+}
+function playLoginWelcome(){speakGujarati('તમારું લોગિન સફળ થયું છે. જય માતાજી.','आपका लॉगिन हो गया है। जय माताजी।');}
+function playEntrySavedAudio(entry){
+  const e=entry||{};
+  const nm=String(e.name||'').trim();
+  const amt=Math.round(Number(e.amount)||0).toLocaleString('en-IN');
+  if(e.type==='daan'){
+    const gu=`${nm}, રૂપિયા ${amt} નું દાન આપવા બદલ આપનો ખૂબ ખૂબ આભાર. તમારી એન્ટ્રી સેવ થઈ ગઈ છે. જય માતાજી.`;
+    const hi=`${nm} जी, ${amt} रुपये का दान देने के लिए आपका बहुत बहुत धन्यवाद। आपकी एंट्री सेव हो गई है। जय माताजी।`;
+    speakGujarati(gu,hi);
+  }else{
+    const gu=`${nm} માટે રૂપિયા ${amt} નો ખર્ચ નોંધાઈ ગયો છે. તમારી એન્ટ્રી સેવ થઈ ગઈ છે. જય માતાજી.`;
+    const hi=`${nm} के लिए ${amt} रुपये का खर्च दर्ज हो गया है। आपकी एंट्री सेव हो गई है। जय माताजी।`;
+    speakGujarati(gu,hi);
+  }
+}
+function playEntryUpdatedAudio(){speakGujarati('તમારી એન્ટ્રી અપડેટ થઈ ગઈ છે. જય માતાજી.','आपकी एंट्री अपडेट हो गई है। जय माताजी।');}
+function playEntryDeletedAudio(){speakGujarati('તમારી એન્ટ્રી ડિલીટ થઈ ગઈ છે. જય માતાજી.','आपकी एंट्री डिलीट हो गई है। जय माताजी।');}
+function playContactDeletedAudio(){speakGujarati('સંપર્ક ડિલીટ થઈ ગયો છે. જય માતાજી.','संपर्क डिलीट हो गया है। जय माताजी।');}
+
+async function openPublicDashboard(){
+  const dash=$('dashboardScreen');
+  const wasLogin=$('loginScreen').style.display!=='none';
+  dash.dataset.returnTo=wasLogin?'login':'app';
+  $('loginScreen').style.display='none';$('appContent').style.display='none';dash.classList.add('show');dash.setAttribute('aria-hidden','false');
+  $('dashboardLoading').style.display='block';$('dashboardContent').style.display='none';
+  try{
+    const res=await fetch(SCRIPT_URL+'?public=dashboard&_='+Date.now(),{cache:'no-store'});
+    const data=await res.json();
+    if(!data.success)throw new Error(data.error||'Dashboard error');
+    renderPublicDashboard(data);
+  }catch(e){$('dashboardLoading').textContent='ડેશબોર્ડ લોડ થઈ શક્યો નથી. ફરી પ્રયાસ કરો.';}
+}
+function renderPublicDashboard(data){
+  $('dashboardLoading').style.display='none';$('dashboardContent').style.display='block';
+  $('dashDaan').textContent=fmtMoney(data.totalDaan);$('dashKharch').textContent=fmtMoney(data.totalKharch);$('dashBalance').textContent=fmtMoney(data.balance);
+  const cats=Array.isArray(data.categories)?data.categories:[];
+  $('dashCategories').innerHTML=cats.length?cats.map(x=>`<div class="dash-row"><span>${esc(x.name)}</span><b>${fmtMoney(x.amount)}</b></div>`).join(''):'<div class="empty">હજુ ખર્ચની એન્ટ્રી નથી.</div>';
+  const recent=Array.isArray(data.recent)?data.recent:[];
+  $('dashRecent').innerHTML=recent.length?recent.map(x=>`<div class="dash-recent"><span>${esc(formatDisplayDate(x.entryDate))}</span><span>${esc(x.name)}${x.category?`<small style="display:block;color:var(--ink-soft)">${esc(x.category)}</small>`:''}</span><span class="${x.type==='daan'?'dash-credit':'dash-debit'}">${x.type==='daan'?'+':'-'}${fmtMoney(x.amount)}</span></div>`).join(''):'<div class="empty">હજુ કોઈ એન્ટ્રી નથી.</div>';
+}
+function closePublicDashboard(){
+  const dash=$('dashboardScreen');dash.classList.remove('show');dash.setAttribute('aria-hidden','true');
+  if(dash.dataset.returnTo==='app'&&sessionToken){$('appContent').style.display='block';}else{$('loginScreen').style.display='flex';}
+}
+$('publicDashboardBtn').onclick=openPublicDashboard;$('appDashboardBtn').onclick=openPublicDashboard;$('closeDashboardBtn').onclick=closePublicDashboard;
+
+function updateLiveTime(){
+  const el=$('liveTime'); if(!el)return;
+  const now=new Date();
+  el.textContent=now.toLocaleDateString('en-IN',{timeZone:'Asia/Kolkata',day:'2-digit',month:'2-digit',year:'numeric'})+' · '+now.toLocaleTimeString('en-IN',{timeZone:'Asia/Kolkata',hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+setInterval(updateLiveTime,1000);
+updateLiveTime();
+
+function showApp(skipLoad=false){ $('loginScreen').style.display='none'; $('appContent').style.display='block'; $('loggedUser').textContent='👤 '+(currentUser||'વપરાશકર્તા')+(currentUserRole==='admin'?' · એડમિન':''); if(skipLoad||entriesLoaded){render();}else{loadEntries();} }
+function showLogin(msg=''){ $('appContent').style.display='none'; $('loginScreen').style.display='flex'; $('loginError').textContent=msg||'યુઝર આઈડી અથવા પાસવર્ડ ખોટો છે.'; $('loginError').style.display=msg?'block':'none'; }
+function forceLogout(msg=''){ sessionToken='';currentUser='';currentUserRole='';localStorage.removeItem('navratriSessionToken');localStorage.removeItem('navratriCurrentUser');localStorage.removeItem('navratriCurrentUserRole');showLogin(msg); }
+async function tryLogin(){
+  prepareVoice();
+  const username=$('loginUser').value.trim(),password=$('loginPass').value;
+  if(!username||!password){$('loginError').textContent='યુઝર આઈડી અને પાસવર્ડ બંને લખો.';$('loginError').style.display='block';return;}
+  $('loginBtn').disabled=true;$('loginBtn').textContent='લોગિન થઈ રહ્યું છે...';$('loginError').style.display='none';
+  const result=await apiPost({action:'login',username,password},false,12000);
+  $('loginBtn').disabled=false;$('loginBtn').textContent='લોગિન કરો';
+  if(!result||!result.success){$('loginError').textContent=(result&&result.error)||'લોગિન થઈ શક્યું નથી.';$('loginError').style.display='block';return;}
+  sessionToken=result.token;currentUser=(result.user&&result.user.name)||username;currentUserRole=(result.user&&result.user.role)||'user';
+  localStorage.setItem('navratriSessionToken',sessionToken);localStorage.setItem('navratriCurrentUser',currentUser);localStorage.setItem('navratriCurrentUserRole',currentUserRole);
+  if(Array.isArray(result.entries)){
+    entries=result.entries.map(e=>({...e,amount:Number(e.amount)||0,ts:Number(e.ts)||0,balance:Number(e.balance)||0,entryBy:e.entryBy||'',updatedBy:e.updatedBy||''}));
+    entriesLoaded=true;
+  }
+  if(result.config) setContactInfo(result.config);
+  showApp(true);
+  showCenterNotice('✅ લોગિન સફળ થયું','success',1800);
+  playLoginWelcome();
+}
+$('logoutBtn').onclick=async()=>{if(sessionToken)await apiPost({action:'logout'});forceLogout('');};
+$('loginBtn').onclick=tryLogin;$('loginPass').onkeydown=e=>{if(e.key==='Enter')tryLogin();};
+if(sessionToken)showApp(false);else showLogin();
+</script>
+</body>
+</html>
